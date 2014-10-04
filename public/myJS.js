@@ -63,6 +63,11 @@ $(document).ready( function() {
 	canvas.addEventListener('touchmove', drawFlower, false);
 	canvas.addEventListener('touchend', addWater, false);
 
+	// For those on the web
+	canvas.addEventListener('mousedown', drawFlower, false);
+	canvas.addEventListener('mousemove', drawFlower, false);
+	canvas.addEventListener('mouseup', addWater, false);
+
 
 })
 
