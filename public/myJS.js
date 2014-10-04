@@ -30,20 +30,31 @@ $(document).ready( function() {
 		var y_offset = Math.ceil((Math.random()-0.5) * 100);
 
 		// Draw image at center of touch event (ish)
-		context.drawImage(flower, 
+		if (event.targetTouches != null) { // TOUCH EVENT
+			context.drawImage(flower, 
 			event.targetTouches[0].pageX - flower.width/2 + x_offset, 
 			event.targetTouches[0].pageY - flower.height/2 + y_offset);
-		ongoingTouches.push(event);
+			ongoingTouches.push(event);
+		} else { // MOUSE EVENT
+			context.drawImage(flower, 
+			event.pageX - flower.width/2 + x_offset, 
+			event.pageY - flower.height/2 + y_offset);
+			ongoingTouches.push(event);
+		}
 	}
 
 	function addWater(event) {
 		event.preventDefault();
 		var last_event = ongoingTouches.pop();
 		var num_drops = Math.ceil(Math.random() * 20)+3;
-		var splash_x = last_event.targetTouches[0].pageX; // This gets x coor of last event
-		var splash_y = last_event.targetTouches[0].pageY;
+		if (last_event.targetTouches != null) { // TOUCH EVENT
+			var splash_x = last_event.targetTouches[0].pageX;
+			var splash_y = last_event.targetTouches[0].pageY;
+		} else { // MOUSE EVENT
+		var splash_x = last_event.pageX;
+			var splash_y = last_event.pageY;
+		}
 
-		console.log(last_event);
 		for (var i=0; i < num_drops; i++) {
 			var x_offset = Math.ceil((Math.random()-0.5) * 200);
 			var y_offset = Math.ceil((Math.random()-0.5) * 200);
