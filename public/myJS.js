@@ -1,4 +1,6 @@
 
+// Canvas recieves listeners
+// Context recieves drawing information
 
 $(document).ready( function() {
 
@@ -10,12 +12,6 @@ $(document).ready( function() {
 	// One day context might support 3d drawing!
 	var canvas = $("#myCanvas")[0];
 	var context = canvas.getContext("2d");
-	var width = canvas.width;
-	var height = canvas.height;
-
-	var ongoingTouches = []; // Used to store touches. Default to empty
-	loadDataFromLocalStorage(); // Load touch array from local storage
-	console.log(ongoingTouches);
 
 	// Load assets
 	var flowerObj1 = new Image();
@@ -26,8 +22,14 @@ $(document).ready( function() {
 	flowerObj3.src = 'images/flower3.png';
 	var flowerArray = [flowerObj1, flowerObj2, flowerObj3];
 
-	// Canvas recieves listeners
-	// Context recieves drawing information
+	var ongoingTouches = []; // Used to store touches. Default to empty
+	loadDataFromLocalStorage(); // Load touch array from local storage
+
+	flowerObj3.onload = function() {
+		// Render a starting flower cluster based on previous (saved) touch events
+		// But first make sure the flower images have floaded!
+        renderFlower();
+      };
 
 	// ---------------------------------------------
 	// EVENT LISTENERS
@@ -44,7 +46,13 @@ $(document).ready( function() {
 	canvas.addEventListener('mousemove', drawFlower, false);
 	canvas.addEventListener('mouseup', addWater, false);
 
-	$("button#clear").click(clearData(ongoingTouches));
+	// Clearing canvas, both locally cached touch array and canvas image
+	$("#clear").click( function() {
+		context.clearRect(0, 0, canvas.width, canvas.height);
+		ongoingTouches = [];
+		localStorage.setItem("ongoingTouches", JSON.stringify(ongoingTouches));
+		console.log("Reset stored touches to empty array");
+	})
 
 	// ---------------------------------------------
 	// FUNCTIONS AND BUTTONS
@@ -59,17 +67,17 @@ $(document).ready( function() {
 
 		// Draw image at center of touch event (ish)
 		if (event.targetTouches != null) { // TOUCH EVENT
-			var coords = [ event.targetTouches[0].pageX, event.targetTouches[0].pageY ];
+			var coords = [ event.targetTouches[0].pageX + x_offset, event.targetTouches[0].pageY + y_offset ];
 			context.drawImage(flower, 
-			coords[0] - flower.width/2 + x_offset, 
-			coords[1] - flower.height/2 + y_offset);
+			coords[0] - flower.width/2, 
+			coords[1] - flower.height/2);
 			ongoingTouches.push(coords); // Need to push array because pushing object results in circular array error
 			saveDataToLocalStorage();
 		} else { // MOUSE EVENT
-			var coords = [ event.pageX, event.pageY ];
+			var coords = [ event.pageX + x_offset, event.pageY + y_offset];
 			context.drawImage(flower, 
-			coords[0] - flower.width/2 + x_offset, 
-			coords[1] - flower.height/2 + y_offset);
+			coords[0] - flower.width/2, 
+			coords[1] - flower.height/2);
 			ongoingTouches.push(coords);
 		}
 	}
@@ -96,9 +104,9 @@ $(document).ready( function() {
 
 	// Resets touch array to empty for local storage
 	function clearData(ongoingTouches) {
-		ongoingTouches = [];
-		localStorage.setItem("ongoingTouches", JSON.stringify(ongoingTouches));
-		console.log(localStorage.getItem("ongoingTouches"));
+		// ongoingTouches = [];
+		// localStorage.setItem("ongoingTouches", JSON.stringify(ongoingTouches));
+		console.log("Reset canvas stored touches to empty array");
 	}
 
 	function saveDataToLocalStorage() {
@@ -115,6 +123,18 @@ $(document).ready( function() {
 			// retrieve and parse the JSON
 			var retrievedData = localStorage.getItem("ongoingTouches");
 			ongoingTouches = JSON.parse(retrievedData);
+		}
+	}
+
+	// Called once: Renders a flower(s) based on the local stored touch array
+	function renderFlower() {
+		for (var i=0; i < ongoingTouches.length; i++) {
+			var flower = flowerArray[Math.ceil(Math.random() * 3)-1];
+			var x = ongoingTouches[i][0];
+			var y = ongoingTouches[i][1];
+			context.drawImage(flower, 
+				x - flower.width/2,
+				y - flower.height/2);
 		}
 	}
 
