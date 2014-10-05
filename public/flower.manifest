@@ -1,0 +1,28 @@
+CACHE MANIFEST
+# Last updated: 2014-10-04
+# V 0.1
+
+# After having loaded and cached the app, on reloading the
+# browser will first only reload the manifest.  
+# If it has not changed, it will use the cached files.
+# If the network is down (or server down) it will use the cached files.
+# If the manifest did change, it will reload the files listed
+# below from the network
+
+# Any change to the manifest file will force all cached files to be reloaded
+# If you change an html, css, or js file, it won't be reloaded unless the
+# manifest changes.  Therefore a version comment is often used, and is changed
+# whenever you want the files to be reloaded.  It doesn't matter how you change
+# it, it is just a convenient way to change the file to force reloading cached files
+
+# Local files to cache
+index.html
+myJS.js
+mystyle.css
+
+# Cache CDN versions of jQuery
+http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
+
+# Files listed under NETWORK will never be cached.
+NETWORK:
+canvas.json

@@ -35,6 +35,8 @@ $(document).ready( function() {
 			event.targetTouches[0].pageX - flower.width/2 + x_offset, 
 			event.targetTouches[0].pageY - flower.height/2 + y_offset);
 			ongoingTouches.push(event);
+
+			console.log(canvas.toDataURL());
 		} else { // MOUSE EVENT
 			context.drawImage(flower, 
 			event.pageX - flower.width/2 + x_offset, 
@@ -98,3 +100,10 @@ $(document).ready( function() {
 
 // Touch events
 // https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Touch_events
+
+// HTML: Web CLips (favicons) for mobile devices
+//https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html
+
+
+
+

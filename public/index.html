@@ -1,9 +1,22 @@
 <!doctype html>
+<!-- Define the manifest that will quide what is stored locally for off-line use -->
+<html manifest="flower.manifest"> 
 <html lang="en">
 <head>
 	<meta charset="utf-8">
 	<title>HW6: Canvasfun</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Don't show the Safari interface if launched outside the browser -->
+		<meta name="apple-mobile-web-app-capable" content="yes" /> 
+	<!-- Set favicon for mobile device if user saves web link (works for both apple/android) -->
+		<link rel="apple-touch-icon" href="count-icon.png"/>
+	<!-- Prevent mobile device from applying styles to favicon (rounded edges, shadow...)
+		NOTE: Older versions of android ONLY support precomposed icons -->
+  		<link rel="apple-touch-icon-precomposed" href="todo-icon.png"/>
+  	<!-- Image displayed as the application starts up. Useful if your app is offline -->
+		<link rel="apple-touch-startup-image" href="todo-startup.png" />
+
 
 	<link rel="stylesheet" type="text/css" href="mystyle.css">
 	<script src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js' type='text/javascript'></script>
