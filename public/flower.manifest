@@ -19,6 +19,9 @@ CACHE MANIFEST
 index.html
 myJS.js
 mystyle.css
+images/flower1.png
+images/flower2.png
+images/flower3.png
 
 # Cache CDN versions of jQuery
 http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
