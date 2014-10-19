@@ -102,13 +102,6 @@ $(document).ready( function() {
 		}
 	}
 
-	// Resets touch array to empty for local storage
-	function clearData(ongoingTouches) {
-		// ongoingTouches = [];
-		// localStorage.setItem("ongoingTouches", JSON.stringify(ongoingTouches));
-		console.log("Reset canvas stored touches to empty array");
-	}
-
 	function saveDataToLocalStorage() {
 		// Convert entire ongoingTouches array, and store it to localStorage
 		// JSON.stringify -> Converts param into JSON savable state
